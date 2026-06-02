@@ -1,0 +1,4 @@
+scenario,revenue_growth_y1,revenue_growth_y2,revenue_growth_y3,revenue_growth_y4,revenue_growth_y5,operating_margin,tax_rate,da_pct_revenue,capex_pct_revenue,nwc_pct_revenue,wacc,terminal_growth
+Base,0.13,0.11,0.10,0.08,0.06,0.43,0.18,0.11,0.18,0.01,0.085,0.025
+Bull,0.16,0.14,0.12,0.10,0.08,0.45,0.17,0.10,0.16,0.005,0.080,0.030
+Bear,0.09,0.08,0.06,0.05,0.04,0.39,0.20,0.12,0.20,0.015,0.095,0.020

@@ -1,0 +1,7 @@
+duckdb
+pandas
+plotly
+python-dotenv
+requests
+streamlit
+yfinance
