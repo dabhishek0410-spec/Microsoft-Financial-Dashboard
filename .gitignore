@@ -1,0 +1,10 @@
+.env
+.DS_Store
+__pycache__/
+*.py[cod]
+*.egg-info/
+.streamlit/secrets.toml
+.venv/
+venv/
+env/
+*.log
