@@ -1,6 +1,6 @@
 # Microsoft Financial Health & Valuation Dashboard
 
-An end-to-end institutional-grade financial analytics platform for Microsoft Corporation built entirely on public data — SEC XBRL filings, yfinance market data, DuckDB, SQL, Python, Plotly, and Streamlit. A companion static GitHub Pages version is available in `docs/index.html`.
+An end-to-end institutional-grade financial analytics platform for Microsoft Corporation built entirely on public data — SEC XBRL filings, yfinance market data, DuckDB, SQL, Python, Plotly, and Streamlit.
 
 The goal is not to present a stock recommendation. The goal is to show a realistic analyst workflow at institutional depth: collect raw public data, normalise it, build financial statements and ratios, add market context, run scenario and probabilistic DCF models, analyse SaaS unit economics, benchmark against peers, and present all results in an interactive, plain-English dashboard.
 
@@ -19,7 +19,7 @@ The goal is not to present a stock recommendation. The goal is to show a realist
 - Models **SaaS unit economics** (LTV, CAC, ARPU, churn) for Office 365 and Xbox Game Pass across all 5 years.
 - Runs a **Monte Carlo DCF simulation** (5,000 randomised valuation paths) using NumPy.
 - Benchmarks Microsoft against Big Tech peers (AAPL, GOOGL, AMZN, META, NVDA) on valuation and efficiency multiples.
-- Presents the analysis through both a **Streamlit interactive dashboard** and a **static HTML dashboard** for GitHub Pages.
+- Presents the analysis through a **Streamlit interactive dashboard** designed for local use and Streamlit Community Cloud deployment.
 
 ---
 
@@ -96,8 +96,6 @@ Every chart across all 12 tabs is paired with a dedicated insight card that tran
 ├── app.py                          # Main Streamlit dashboard (12 tabs, 3,700+ lines)
 ├── requirements.txt
 ├── .env                            # SEC_USER_AGENT (not committed)
-├── docs/
-│   └── index.html                  # Static GitHub Pages dashboard
 ├── recordings/
 │   └── make_gif.py                 # Screenshot-to-GIF compiler (Pillow)
 ├── data/
@@ -120,40 +118,12 @@ Every chart across all 12 tabs is paired with a dedicated insight card that tran
     ├── run_market_metrics.py
     ├── run_valuation_multiples.py
     ├── run_dcf_model.py
-    ├── run_health_score.py
-    └── build_static_dashboard.py
+    └── run_health_score.py
 ```
 
 ---
 
-## View Without Localhost
-
-The static dashboard is available at:
-
-```text
-docs/index.html
-```
-
-Open directly in any browser or serve through GitHub Pages. No Streamlit, no Python process, no localhost required after generation.
-
-To regenerate the static dashboard after refreshing the database:
-
-```bash
-python src/build_static_dashboard.py
-```
-
----
-
-## GitHub Pages Deployment
-
-1. Push this repository to GitHub.
-2. Go to **Settings → Pages**.
-3. Set source: deploy from branch → `main` → `/docs` folder.
-4. Save. GitHub publishes `docs/index.html` as the project page.
-
----
-
-## Local Streamlit Version
+## Streamlit App
 
 **Install dependencies:**
 
@@ -184,6 +154,26 @@ python src/run_health_score.py
 ```bash
 streamlit run app.py
 ```
+
+---
+
+## Streamlit Community Cloud Deployment
+
+This repository is intended to deploy directly on Streamlit Community Cloud. The app reads the processed DuckDB database from:
+
+```text
+database/finance.duckdb
+```
+
+Recommended deployment settings:
+
+| Setting | Value |
+|---|---|
+| Repository | `dabhishek0410-spec/Microsoft-Financial-Dashboard` |
+| Branch | `main` |
+| Main file path | `app.py` |
+
+The repository does not require `docs/index.html` or a GitHub Pages build for deployment.
 
 ---
 
