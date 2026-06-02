@@ -8,3 +8,15 @@ __pycache__/
 venv/
 env/
 *.log
+
+# Generated / heavy raw data
+data/raw/sec_companyfacts_msft.json
+data/raw/raw_sec_facts_msft.csv
+data/raw/msft_market_prices.csv
+data/raw/sp500_market_prices.csv
+data/raw/msft_market_summary.csv
+
+# Local tooling / recordings
+.vscode/
+.antigravitycli/
+recordings/

@@ -3157,22 +3157,63 @@ This line chart represents the core projections that dictate our stock valuation
     with mc_col2:
         fig_mc = px.histogram(
             sim_prices,
-            nbins=60,
-            title="Probability Distribution of Implied Intrinsic Share Price",
+            nbins=38,
+            title="Monte Carlo Distribution of Implied Share Price",
             labels={"value": "Implied Share Price ($)", "count": "Frequency"},
             color_discrete_sequence=["#5ED6C6"]
         )
         fig_mc.update_traces(
+            name="Simulation Frequency",
+            showlegend=False,
+            marker_line_width=0,
+            opacity=0.88,
             hovertemplate="<b>Price Bucket</b><br>Implied Share Price: $%{x:.2f}<br>Count: %{y}<extra></extra>"
         )
-        
-        # Add vertical line markers for 10th, 50th, 90th percentiles
-        fig_mc.add_vline(x=p10, line_dash="dash", line_color="#F29A8A", annotation_text=f"10% (Cons.): ${p10:.1f}")
-        fig_mc.add_vline(x=p50, line_color="#0078D4", annotation_text=f"50% (Median): ${p50:.1f}")
-        fig_mc.add_vline(x=p90, line_dash="dash", line_color="#107C10", annotation_text=f"90% (Optim.): ${p90:.1f}")
-        
-        fig_mc.update_layout(showlegend=False)
-        style_chart(fig_mc, height=365)
+
+        percentile_markers = [
+            (p10, "10th percentile", "Conservative floor", "#F29A8A", "dash", 0.72),
+            (p50, "50th percentile", "Median fair value", "#0078D4", "solid", 0.88),
+            (p90, "90th percentile", "Optimistic case", "#107C10", "dash", 0.72),
+        ]
+        for price, percentile, label, color, dash, label_y in percentile_markers:
+            fig_mc.add_vline(
+                x=price,
+                line_dash=dash,
+                line_color=color,
+                line_width=3,
+            )
+            fig_mc.add_annotation(
+                x=price,
+                y=label_y,
+                xref="x",
+                yref="paper",
+                text=f"<b>{percentile}</b><br>{label}<br>${price:,.2f}",
+                showarrow=True,
+                arrowhead=2,
+                arrowsize=1,
+                arrowwidth=1.4,
+                arrowcolor=color,
+                ax=0,
+                ay=-34,
+                bgcolor="rgba(18, 24, 31, 0.92)",
+                bordercolor=color,
+                borderwidth=1,
+                font=dict(color="#F4F7F8", size=11),
+                align="center",
+            )
+
+        style_chart(fig_mc, height=440, show_legend=False)
+        fig_mc.update_layout(
+            showlegend=False,
+            bargap=0.03,
+            margin=dict(l=58, r=34, t=102, b=56),
+        )
+        fig_mc.update_xaxes(
+            title="Implied Share Price ($)",
+            tickprefix="$",
+            tickformat=",.0f",
+        )
+        fig_mc.update_yaxes(title="Simulation Count")
         st.plotly_chart(fig_mc, width="stretch")
         
         st.markdown(
